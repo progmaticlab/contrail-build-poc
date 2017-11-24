@@ -22,21 +22,25 @@ sudo yum -y install $PACKAGES
 KVD=`rpm -q kernel-devel --queryformat "%{VERSION}-%{RELEASE}.x86_64\n" | sort -n`
 a=(${KVD//./ })
 KV="${a[0]}.${a[1]}.${a[2]}.${a[5]}.${a[6]}"
-sudo ln -s /usr/src/kernels/$KVD /usr/src/kernels/$KV
+if [ ! -e "/usr/src/kernels/$KV" ] ; then
+  sudo ln -s /usr/src/kernels/$KVD /usr/src/kernels/$KV
+fi
 
 cd $my_dir
-rpmdev-setuptree
-cp "$my_dir/zookeeper.spec" $my_dir/rpmbuild/SPECS/
-spectool -g -R $my_dir/rpmbuild/SPECS/zookeeper.spec
-rpmbuild -ba $my_dir/rpmbuild/SPECS/zookeeper.spec
-rpm -ivh $my_dir/rpmbuild/RPMS/x86_64/libzookeeper-*.rpm
+if ! yum info libzookeeper-devel | grep installed ; then
+  # rpmbuild is always created in $HOME
+  rpmdev-setuptree
+  spectool -g -R ./zookeeper.spec
+  rpmbuild -ba ./zookeeper.spec
+  sudo rpm -ivh $HOME/rpmbuild/RPMS/x86_64/libzookeeper-*.rpm
+  rm -rf $HOME/rpmbuild
+fi
 
 wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.8.0/libuv-1.8.0-1.el7.centos.x86_64.rpm
 wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.8.0/libuv-devel-1.8.0-1.el7.centos.x86_64.rpm
 wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.4.2/cassandra-cpp-driver-2.4.2-1.el7.centos.x86_64.rpm
 wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.4.2/cassandra-cpp-driver-devel-2.4.2-1.el7.centos.x86_64.rpm
-
-rpm -ivh cassandra-cpp-*.rpm libuv-*.rpm
+sudo rpm -ivh cassandra-cpp-*.rpm libuv-*.rpm
 
 git clone https://github.com/edenhill/librdkafka
 pushd librdkafka/
