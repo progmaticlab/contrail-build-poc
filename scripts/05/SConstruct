@@ -1,0 +1,13 @@
+# -*- mode: python; -*-
+#
+# Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
+#
+# repository root directory
+import os
+import sys
+sys.path.append('tools/build')
+import rules
+conf = Configure(DefaultEnvironment(ENV = os.environ))
+BuildEnv = rules.SetupBuildEnvironment(conf)
+BuildEnv.Append(CPPPATH='#/build/include/vrouter')
+SConscript(dirs=['controller/src'], exports='BuildEnv')

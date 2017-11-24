@@ -1,0 +1,21 @@
+# -*- mode: python; -*-
+#
+# Copyright (c) 2013 Juniper Networks, Inc. All rights reserved.
+#
+# repository root directory
+import os
+import sys
+sys.path.append('tools/build')
+import rules
+conf = Configure(DefaultEnvironment(ENV = os.environ))
+BuildEnv = rules.SetupBuildEnvironment(conf)
+SConscript(dirs=['src/contrail-common', 'controller/src'], exports='BuildEnv')
+# TODO: move these lines to specific SConscript
+BuildEnv.Alias('install', [BuildEnv['TOP_LIB'] + '/libcpuinfo.a',
+                           BuildEnv['TOP_LIB'] + '/libnodeinfo.a',
+                           BuildEnv['TOP_LIB'] + '/libbase.a',
+                           BuildEnv['TOP_LIB'] + '/libprocess_info.a'])
+sandesh_dir = 'src/contrail-common/base/sandesh/'
+for item in ['cpuinfo.sandesh', 'nodeinfo.sandesh', 'process_info.sandesh', 'task.sandesh', 'version.sandesh']:
+    BuildEnv.Install('#/build/debug/base/sandesh/', sandesh_dir + item)
+BuildEnv.Alias('install', '#/build/debug/base/sandesh/')
