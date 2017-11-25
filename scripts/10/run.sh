@@ -3,6 +3,8 @@
 my_file="$(readlink -e "$0")"
 my_dir="$(dirname $my_file)"
 
+echo "INFO: start time $(date)"
+
 export WORKSPACE=${WORKSPACE:-$HOME}
 cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
@@ -30,3 +32,5 @@ EOF
 rpmbuild -ba --define "_srcVer 4.0.1" --define "_buildTag 1" --define "_sbtop $(pwd)" --define "_prebuilddir $CONTRAIL_BUILDROOT_DIR" "$my_dir/contrail.spec"
 
 popd
+
+echo "INFO: end time $(date)"

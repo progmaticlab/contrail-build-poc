@@ -3,6 +3,8 @@
 my_file="$(readlink -e "$0")"
 my_dir="$(dirname $my_file)"
 
+echo "INFO: start time $(date)"
+
 export WORKSPACE=${WORKSPACE:-$HOME}
 cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
@@ -71,3 +73,4 @@ cd $WORKSPACE
 tar -czPf step-1.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 
+echo "INFO: end time $(date)"
