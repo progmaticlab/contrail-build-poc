@@ -15,8 +15,16 @@ ln -s $CONTRAIL_BUILDROOT_DIR buildroot
 
 git clone https://github.com/juniper/contrail-build tools/build
 
+git clone https://github.com/juniper/contrail-nova-vif-driver openstack/nova_contrail_vif
+git clone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_plugin
+#git clone https://github.com/juniper/contrail-nova-extensions openstack/nova_extensions
+#git clone https://github.com/juniper/contrail-heat openstack/contrail-heat
+#git clone https://github.com/juniper/contrail-ceilometer-plugin contrail-ceilometer-plugin
+
 scons --root=$CONTRAIL_BUILDROOT_DIR install
 scons --root=$CONTRAIL_BUILDROOT_DIR nova-contrail-vif
+
+rm -rf tools openstack contrail-ceilometer-plugin
 
 popd
 

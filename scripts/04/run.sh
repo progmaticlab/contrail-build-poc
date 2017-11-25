@@ -33,6 +33,8 @@ scons --root=$CONTRAIL_BUILDROOT_DIR build-kmodule
 cp vrouter/include/*.h build/include/vrouter/
 cp vrouter/sandesh/vr.sandesh build/debug/vrouter/sandesh/
 
+rm -rf tools vrouter
+
 popd
 
 tar -czPf step-4.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR

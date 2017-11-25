@@ -12,7 +12,7 @@ tar -xPf step-4.tgz
 pushd "$my_dir"
 git clone https://github.com/juniper/contrail-build tools/build
 git clone https://github.com/juniper/contrail-common src/contrail-common
-git clone https://github.com/juniper/contrail-controller
+git clone https://github.com/juniper/contrail-controller controller
 git clone https://github.com/juniper/contrail-generateDS tools/generateds
 
 ln -s $CONTRAIL_BUILD_DIR build
@@ -23,6 +23,8 @@ ln -s ../build/third_party/go third_party/go
 ln -s ../build/third_party/cni_go_deps third_party/cni_go_deps
 
 scons --root=$CONTRAIL_BUILDROOT_DIR install
+
+rm -rf tools src controller
 
 popd
 
