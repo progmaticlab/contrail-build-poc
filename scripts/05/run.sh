@@ -7,7 +7,7 @@ export WORKSPACE=${WORKSPACE:-$HOME}
 cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
 export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
-tar -xf step-4.tgz
+tar -xPf step-4.tgz
 
 pushd "$my_dir"
 git clone https://github.com/juniper/contrail-build tools/build
@@ -26,6 +26,6 @@ scons --root=$CONTRAIL_BUILDROOT_DIR install
 
 popd
 
-tar -czf step-5.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
+tar -czPf step-5.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 

@@ -68,6 +68,6 @@ echo "Contrail build root dir set to $CONTRAIL_BUILDROOT_DIR "
 echo "Reboot the system if kernel has been updated."
 
 cd $WORKSPACE
-tar -czf step-1.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
+tar -czPf step-1.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 

@@ -7,7 +7,7 @@ export WORKSPACE=${WORKSPACE:-$HOME}
 cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
 export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
-tar -xf step-5.tgz
+tar -xPf step-5.tgz
 
 pushd "$my_dir"
 ln -s $CONTRAIL_BUILD_DIR build
@@ -20,6 +20,6 @@ scons --root=$CONTRAIL_BUILDROOT_DIR nova-contrail-vif
 
 popd
 
-tar -czf step-6.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
+tar -czPf step-6.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 

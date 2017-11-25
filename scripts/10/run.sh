@@ -7,7 +7,7 @@ export WORKSPACE=${WORKSPACE:-$HOME}
 cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
 export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
-tar -xf step-6.tgz
+tar -xPf step-6.tgz
 
 pushd "$my_dir"
 ln -s $CONTRAIL_BUILD_DIR build

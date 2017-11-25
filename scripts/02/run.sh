@@ -8,7 +8,7 @@ cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
 export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
 
-tar -xf step-1.tgz
+tar -xPf step-1.tgz
 
 pushd "$my_dir"
 git clone https://github.com/e-kuznetsov/build-contrail-third-party.git
@@ -25,6 +25,6 @@ popd
 rm -rf build-contrail-third-party
 
 popd
-tar -czf step-2.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
+tar -czPf step-2.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 

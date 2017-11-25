@@ -8,7 +8,7 @@ cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
 export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
 
-tar -xf step-3.tgz
+tar -xPf step-3.tgz
 
 pushd "$my_dir"
 git clone https://github.com/juniper/contrail-build tools/build
@@ -35,6 +35,6 @@ cp vrouter/sandesh/vr.sandesh build/debug/vrouter/sandesh/
 
 popd
 
-tar -czf step-4.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
+tar -czPf step-4.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 

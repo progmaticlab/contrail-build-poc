@@ -8,7 +8,7 @@ cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
 export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
 
-tar -xf step-2.tgz
+tar -xPf step-2.tgz
 
 pushd $my_dir
 git clone https://github.com/juniper/contrail-build tools/build
@@ -54,6 +54,6 @@ scons --root=$CONTRAIL_BUILDROOT_DIR install
 scons --root=$CONTRAIL_BUILDROOT_DIR install sandesh:test
 popd
 
-tar -czf step-3.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
+tar -czPf step-3.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
 
