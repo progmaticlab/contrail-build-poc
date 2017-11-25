@@ -15,6 +15,8 @@ tar -xPf step-3.tgz
 pushd "$my_dir"
 git clone https://github.com/juniper/contrail-build tools/build
 git clone https://github.com/juniper/contrail-vrouter vrouter
+# TODO: rework to do not use src/contrail-common
+git clone https://github.com/juniper/contrail-common src/contrail-common
 
 ln -s $CONTRAIL_BUILD_DIR build
 ln -s $CONTRAIL_BUILDROOT_DIR buildroot

@@ -9,5 +9,4 @@ sys.path.append('tools/build')
 import rules
 conf = Configure(DefaultEnvironment(ENV = os.environ))
 BuildEnv = rules.SetupBuildEnvironment(conf)
-BuildEnv.Append(CPPPATH='build/include/vrouter')
 SConscript(dirs=['vrouter'], exports='BuildEnv')
