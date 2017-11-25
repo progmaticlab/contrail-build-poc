@@ -37,7 +37,7 @@ ln -s ../../controller-template/src/sandesh sandesh
 popd
 cp "$my_dir/SConscript.controller-src" controller/src/SConscript
 
-# TODO: remove these links
+# TODO: remove these links in future
 mkdir -p build/include/base
 pushd build/include/base
 ln -s ../../../src/src/contrail-common/base/*.h .
@@ -50,6 +50,14 @@ mkdir -p build/debug/sandesh/common/dist
 
 scons --root=$CONTRAIL_BUILDROOT_DIR install
 scons --root=$CONTRAIL_BUILDROOT_DIR install sandesh:test
+
+# TODO: remove saving something for next step
+mkdir -p build/debug/tools/sandesh/library/c/protocol
+mkdir -p build/debug/tools/sandesh/library/c/transport
+cp src/contrail-common/sandesh/library/c/protocol/*.c  build/debug/tools/sandesh/library/c/protocol/
+cp src/contrail-common/sandesh/library/c/transport/*.c  build/debug/tools/sandesh/library/c/transport/
+cp src/contrail-common/sandesh/library/c/*.c  build/debug/tools/sandesh/library/c/
+cp src/contrail-common/sandesh/library/c/*.h  build/debug/tools/sandesh/library/c/
 
 rm -rf controller-template src tools
 
