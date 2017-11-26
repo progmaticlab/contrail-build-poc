@@ -1,7 +1,7 @@
 %define         _contrailetc /etc/contrail
 %define         _contrailcontrol /opt/contrail/control-node
 %define         _supervisordir /etc/contrail/supervisord_control_files
-%define         _distropkgdir tools/packaging/common/control_files
+%define         _distropkgdir %(pwd)/tools/packaging/common/control_files
 %define         _nodemgr_config controller/src/nodemgr/control_nodemgr
 
 %if 0%{?_buildTag:1}

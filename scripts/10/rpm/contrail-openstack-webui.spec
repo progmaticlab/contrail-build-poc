@@ -1,4 +1,4 @@
-%define         _distropkgdir tools/packaging/common/control_files
+%define         _distropkgdir           %(pwd)/tools/packaging/common/control_files
 %define         _contrailetc            /etc/contrail
 %define         _contrailwebsrc         /usr/src/contrail/contrail-webui
 %if 0%{?fedora} >= 17

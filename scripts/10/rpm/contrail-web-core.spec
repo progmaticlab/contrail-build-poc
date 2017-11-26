@@ -1,6 +1,6 @@
 # view contents of rpm file: rpm -qlp <filename>.rpm
 
-%define         _distropkgdir tools/packaging/common/control_files
+%define         _distropkgdir %(pwd)/tools/packaging/common/control_files
 %define		_contrailetc 		/etc/contrail
 %define		_contrailwebsrc 	/usr/src/contrail/contrail-web-core
 %if 0%{?fedora} >= 17

@@ -1,4 +1,4 @@
-%define         _distropkgdir tools/packaging/common/control_files
+%define         _distropkgdir %(pwd)/tools/packaging/common/control_files
 %define         _nodemgr_config controller/src/nodemgr/config_nodemgr
 %if 0%{?_buildTag:1}
 %define         _relstr      %{_buildTag}

@@ -1,5 +1,5 @@
 %define _contrailetc  /etc/contrail
-%define _distropkgdir tools/packaging/common/control_files
+%define _distropkgdir %(pwd)/tools/packaging/common/control_files
 %define _usr_bin /usr/bin/
 
 %if 0%{?_buildTag:1}
