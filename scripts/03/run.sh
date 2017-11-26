@@ -5,6 +5,7 @@ my_dir="$(dirname $my_file)"
 
 echo "INFO: start time $(date)"
 
+export JOBS_COUNT=${JOBS_COUNT:-$(grep -c processor /proc/cpuinfo || echo 1)}
 export WORKSPACE=${WORKSPACE:-$HOME}
 cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
@@ -48,8 +49,8 @@ ln -s ../../../src/src/contrail-common/io/*.h .
 popd
 mkdir -p build/debug/sandesh/common/dist
 
-scons --root=$CONTRAIL_BUILDROOT_DIR install
-scons --root=$CONTRAIL_BUILDROOT_DIR install sandesh:test
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR install
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR install sandesh:test
 
 # TODO: remove saving something for next step
 mkdir -p build/debug/tools/sandesh/library/c/protocol

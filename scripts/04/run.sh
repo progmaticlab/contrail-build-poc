@@ -5,6 +5,7 @@ my_dir="$(dirname $my_file)"
 
 echo "INFO: start time $(date)"
 
+export JOBS_COUNT=${JOBS_COUNT:-$(grep -c processor /proc/cpuinfo || echo 1)}
 export WORKSPACE=${WORKSPACE:-$HOME}
 cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
@@ -18,13 +19,13 @@ git clone https://github.com/juniper/contrail-vrouter vrouter
 # TODO: rework to do not use src/contrail-common
 git clone https://github.com/juniper/contrail-common src/contrail-common
 
-ln -s $CONTRAIL_BUILD_DIR build
-ln -s $CONTRAIL_BUILDROOT_DIR buildroot
+test -L "./build" || ln -s $CONTRAIL_BUILD_DIR build
+test -L "./buildroot" || ln -s $CONTRAIL_BUILDROOT_DIR buildroot
 
 patch -i vrouter.patch vrouter/linux/vr_host_interface.c
 
-scons --root=$CONTRAIL_BUILDROOT_DIR build-kmodule
-scons --root=$CONTRAIL_BUILDROOT_DIR install
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR build-kmodule
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR install
 
 # TODO: these steps must be in SConscript
 mkdir -p build/include/vrouter

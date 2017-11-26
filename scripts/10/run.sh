@@ -12,8 +12,8 @@ export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
 tar -xPf step-6.tgz
 
 pushd "$my_dir"
-ln -s $CONTRAIL_BUILD_DIR build
-ln -s $CONTRAIL_BUILDROOT_DIR buildroot
+test -L "./build" || ln -s $CONTRAIL_BUILD_DIR build
+test -L "./buildroot" || ln -s $CONTRAIL_BUILDROOT_DIR buildroot
 
 git clone https://github.com/e-kuznetsov/build-contrail-rpms.git
 git clone https://github.com/juniper/contrail-packages tools/packages

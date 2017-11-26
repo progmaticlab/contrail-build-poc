@@ -5,6 +5,7 @@ my_dir="$(dirname $my_file)"
 
 echo "INFO: start time $(date)"
 
+export JOBS_COUNT=${JOBS_COUNT:-$(grep -c processor /proc/cpuinfo || echo 1)}
 export WORKSPACE=${WORKSPACE:-$HOME}
 cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
@@ -17,14 +18,14 @@ git clone https://github.com/juniper/contrail-common src/contrail-common
 git clone https://github.com/juniper/contrail-controller controller
 git clone https://github.com/juniper/contrail-generateDS tools/generateds
 
-ln -s $CONTRAIL_BUILD_DIR build
-ln -s $CONTRAIL_BUILDROOT_DIR buildroot
+test -L "./build" || ln -s $CONTRAIL_BUILD_DIR build
+test -L "./buildroot" || ln -s $CONTRAIL_BUILDROOT_DIR buildroot
 
 mkdir -p third_party
 ln -s ../build/third_party/go third_party/go
 ln -s ../build/third_party/cni_go_deps third_party/cni_go_deps
 
-scons --root=$CONTRAIL_BUILDROOT_DIR install
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR install
 
 rm -rf tools src controller
 

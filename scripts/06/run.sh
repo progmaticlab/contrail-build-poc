@@ -5,6 +5,7 @@ my_dir="$(dirname $my_file)"
 
 echo "INFO: start time $(date)"
 
+export JOBS_COUNT=${JOBS_COUNT:-$(grep -c processor /proc/cpuinfo || echo 1)}
 export WORKSPACE=${WORKSPACE:-$HOME}
 cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
@@ -12,8 +13,8 @@ export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
 tar -xPf step-5.tgz
 
 pushd "$my_dir"
-ln -s $CONTRAIL_BUILD_DIR build
-ln -s $CONTRAIL_BUILDROOT_DIR buildroot
+test -L "./build" || ln -s $CONTRAIL_BUILD_DIR build
+test -L "./buildroot" || ln -s $CONTRAIL_BUILDROOT_DIR buildroot
 
 git clone https://github.com/juniper/contrail-build tools/build
 
@@ -23,8 +24,8 @@ git clone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_p
 #git clone https://github.com/juniper/contrail-heat openstack/contrail-heat
 #git clone https://github.com/juniper/contrail-ceilometer-plugin contrail-ceilometer-plugin
 
-scons --root=$CONTRAIL_BUILDROOT_DIR install
-scons --root=$CONTRAIL_BUILDROOT_DIR nova-contrail-vif
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR install
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR nova-contrail-vif
 
 rm -rf tools openstack contrail-ceilometer-plugin
 
