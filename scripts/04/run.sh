@@ -26,6 +26,8 @@ patch -i vrouter.patch vrouter/linux/vr_host_interface.c
 
 scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR build-kmodule
 scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR --opt=production vrouter/dpdk
+# needed for vrouter-utils
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR install
 
 # TODO: these steps must be in SConscript
 mkdir -p build/include/vrouter
