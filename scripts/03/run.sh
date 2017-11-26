@@ -50,7 +50,8 @@ popd
 mkdir -p build/debug/sandesh/common/dist
 
 scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR install
-scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR install sandesh:test
+# TODO: tests can work only in one-thread mode
+scons -j 1 --root=$CONTRAIL_BUILDROOT_DIR install sandesh:test
 
 # TODO: remove saving something for next step
 mkdir -p build/debug/tools/sandesh/library/c/protocol
