@@ -64,17 +64,9 @@ for tgt in targets:
     if tgt.endswith(env['SHLIBSUFFIX'] + '.' + version):
         env.Alias('install', env.Install(env['INSTALL_LIB'], tgt))
 
-def Symlink(target, source):
-    parent = os.path.dirname(target[0].abspath)
-    if not os.path.exists(parent):
-        os.makedirs(parent)
-
-    if not os.path.exists(target[0].abspath):
-        os.symlink(source[0].abspath, target[0].abspath)
-
 libpath = Dir(vpath).abspath
 if not os.path.exists(libpath):
     print '%s not present' % libpath
     sys.exit(1)
 
-Symlink([Dir('#/build/include/tbb')], [Dir(vpath + '/include/tbb')])
+env.Install('#build/include', vpath + '/include/tbb')

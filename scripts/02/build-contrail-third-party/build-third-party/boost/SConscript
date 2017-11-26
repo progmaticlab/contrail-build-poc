@@ -112,18 +112,10 @@ for lib in boost_libs:
     env.Depends(solink, solib)
     env.Alias('install', env.Install(env['INSTALL_LIB'], solib))
 
-def Symlink(target, source):
-    parent = os.path.dirname(target[0].abspath)
-    if not os.path.exists(parent):
-        os.makedirs(parent)
-
-    if not os.path.exists(target[0].abspath):
-        os.symlink(source[0].abspath, target[0].abspath)
-
 libpath = Dir(vpath).abspath
 if not os.path.exists(libpath):
     print '%s not present' % libpath
     sys.exit(1)
 
-Symlink([Dir('#/build/include/boost')], [Dir(vpath + '/boost')])
+env.Install('#build/include/', vpath + '/boost')
 

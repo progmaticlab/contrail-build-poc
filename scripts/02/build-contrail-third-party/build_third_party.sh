@@ -25,3 +25,4 @@ fi
 
 python contrail-third-party/fetch_packages.py
 scons -j ${JOBS_COUNT:-$(grep -c processor /proc/cpuinfo || echo 1)}
+scons -j ${JOBS_COUNT:-$(grep -c processor /proc/cpuinfo || echo 1)} install
