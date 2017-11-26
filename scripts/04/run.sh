@@ -31,7 +31,7 @@ mkdir -p build/include/vrouter
 cp vrouter/include/*.h build/include/vrouter/
 cp vrouter/sandesh/vr.sandesh build/debug/vrouter/sandesh/
 
-rm -rf tools vrouter
+rm -rf tools vrouter src
 
 popd
 
