@@ -25,7 +25,7 @@ test -L "./buildroot" || ln -s $CONTRAIL_BUILDROOT_DIR buildroot
 patch -i vrouter.patch vrouter/linux/vr_host_interface.c
 
 scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR build-kmodule
-scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR install
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR --opt=production vrouter/dpdk
 
 # TODO: these steps must be in SConscript
 mkdir -p build/include/vrouter

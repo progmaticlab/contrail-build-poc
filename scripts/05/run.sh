@@ -26,6 +26,11 @@ ln -s ../build/third_party/go third_party/go
 ln -s ../build/third_party/cni_go_deps third_party/cni_go_deps
 
 scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR install
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR control-node:node_mgr
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR vrouter:node_mgr
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR opserver:node_mgr
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR database:node_mgr
+scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR src:nodemgr
 
 rm -rf tools src controller
 
