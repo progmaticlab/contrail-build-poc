@@ -1,0 +1,17 @@
+import os
+import sys
+
+env = DefaultEnvironment()
+rapidjson_path = '#/third_party/rapidjson'
+
+libpath = Dir(rapidjson_path).abspath
+if not os.path.exists(libpath):
+    print '%s not present' % libpath
+    sys.exit(1)
+
+Command('#/build/include/rapidjson', '#/third_party/rapidjson/include/rapidjson', Copy("$TARGET", "$SOURCE"))
+    
+
+# Local Variables:
+# mode: python
+# End:
