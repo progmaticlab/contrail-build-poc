@@ -60,7 +60,7 @@ for pkg in neutron-plugin-contrail ; do
 done
 # vrouter
 for pkg in vrouter-common vrouter-dpdk vrouter-dpdk-init vrouter-init ; do
-  $CMD "$SPEC_DIR/contrail-$pkg.spec" &> $logdir/rpm-contrail-$pkg.log
+  $CMD --define "_skuTag $OPENSTACK_VERSION" "$SPEC_DIR/contrail-$pkg.spec" &> $logdir/rpm-contrail-$pkg.log
 done
 # nodemgr
 $CMD --define "_builddir $CONTRAIL_BUILD_DIR" "$SPEC_DIR/contrail-nodemgr.spec" &> $logdir/rpm-contrail-nodemgr.log
