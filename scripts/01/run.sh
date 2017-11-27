@@ -35,13 +35,13 @@ if ! yum info libzookeeper-devel | grep installed ; then
   rpmdev-setuptree
   spectool -g -R ./zookeeper.spec
   rpmbuild -ba ./zookeeper.spec
-  sudo rpm -ivh $HOME/rpmbuild/RPMS/x86_64/libzookeeper-*.rpm
+  sudo yum install -y $HOME/rpmbuild/RPMS/x86_64/libzookeeper-*.rpm
   rm -rf $HOME/rpmbuild
 fi
 
 wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.4.2/cassandra-cpp-driver-2.4.2-1.el7.centos.x86_64.rpm
 wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.4.2/cassandra-cpp-driver-devel-2.4.2-1.el7.centos.x86_64.rpm
-sudo rpm -ivh cassandra-cpp-*.rpm 
+sudo yum install -y cassandra-cpp-*.rpm 
 
 git clone https://github.com/edenhill/librdkafka
 pushd librdkafka/
