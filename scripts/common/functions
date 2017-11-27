@@ -1,0 +1,8 @@
+function gitclone {
+   local repo_url=$1
+   local repo_dst=${2:-$(echo "$1"| awk -F"/" 'NF>1{print $NF}')}
+   git clone $repo_url $repo_dst
+   pushd $repo_dst
+   git reset --hard $(cat $HOME/tmp/reporevisions | grep $repo_url | awk '{print $2}')
+   popd
+}
