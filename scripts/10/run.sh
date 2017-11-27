@@ -51,7 +51,7 @@ set +x
 logdir="$WORKSPACE/log"
 mkdir -p $logdir
 
-CMD="rpmbuild -ba --define '_srcVer 4.0.1' --define '_buildTag 1' --define '_sbtop $(pwd)' --define '_prebuilddir $CONTRAIL_BUILDROOT_DIR'"
+CMD="rpmbuild -ba --define '_srcVer ${CONTRAIL_RELEASE:-4.0.0.0}' --define '_buildTag ${CONTRAIL_BUILD:-1}' --define '_sbtop $(pwd)' --define '_prebuilddir $CONTRAIL_BUILDROOT_DIR'"
 SPEC_DIR="$my_dir/rpm"
 # openstack plugins
 for pkg in neutron-plugin-contrail ; do
