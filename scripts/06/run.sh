@@ -1,5 +1,7 @@
 #!/bin/bash -xe
 
+source $my_dir/../common/functions
+
 my_file="$(readlink -e "$0")"
 my_dir="$(dirname $my_file)"
 
@@ -16,13 +18,13 @@ pushd "$my_dir"
 test -L "./build" || ln -s $CONTRAIL_BUILD_DIR build
 test -L "./buildroot" || ln -s $CONTRAIL_BUILDROOT_DIR buildroot
 
-git clone https://github.com/juniper/contrail-build tools/build
+gitclone https://github.com/juniper/contrail-build tools/build
 
-git clone https://github.com/juniper/contrail-nova-vif-driver openstack/nova_contrail_vif
-#git clone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_plugin
-#git clone https://github.com/juniper/contrail-nova-extensions openstack/nova_extensions
-#git clone https://github.com/juniper/contrail-heat openstack/contrail-heat
-#git clone https://github.com/juniper/contrail-ceilometer-plugin contrail-ceilometer-plugin
+gitclone https://github.com/juniper/contrail-nova-vif-driver openstack/nova_contrail_vif
+#gitclone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_plugin
+#gitclone https://github.com/juniper/contrail-nova-extensions openstack/nova_extensions
+#gitclone https://github.com/juniper/contrail-heat openstack/contrail-heat
+#gitclone https://github.com/juniper/contrail-ceilometer-plugin contrail-ceilometer-plugin
 
 scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR install
 scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR nova-contrail-vif

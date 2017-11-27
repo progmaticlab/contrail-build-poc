@@ -1,5 +1,7 @@
 #!/bin/bash -xe
 
+source $my_dir/../common/functions
+
 my_file="$(readlink -e "$0")"
 my_dir="$(dirname $my_file)"
 
@@ -33,19 +35,19 @@ rpmbuild -ba --define "_srcVer 4.0.1" --define "_buildTag 1" --define "_sbtop $(
 # build other packages:
 # TODO: remove all these clones.
 # now it's needed for init files.
-git clone https://github.com/juniper/contrail-packaging tools/packaging
+gitclone https://github.com/juniper/contrail-packaging tools/packaging
 # this repo is used for taking another init files
-git clone https://github.com/juniper/contrail-controller controller
+gitclone https://github.com/juniper/contrail-controller controller
 # these repos are used for building node/npm packages
-git clone https://github.com/juniper/contrail-web-controller
-git clone https://github.com/juniper/contrail-web-core
+gitclone https://github.com/juniper/contrail-web-controller
+gitclone https://github.com/juniper/contrail-web-core
 # these items are used to build rpm-s
 cp -r contrail-web-controller $HOME/rpmbuild/SOURCES/
 cp -r contrail-web-core $HOME/rpmbuild/SOURCES/
 # fetch packages do not ini node-saas module
 patch -i web-core.patch contrail-web-core/dev-install.sh
 # source code for neutron-plugin
-git clone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_plugin
+gitclone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_plugin
 
 set +x
 logdir="$WORKSPACE/log"

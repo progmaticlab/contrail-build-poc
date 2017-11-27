@@ -1,5 +1,7 @@
 #!/bin/bash -xe
 
+source $my_dir/../common/functions
+
 my_file="$(readlink -e "$0")"
 my_dir="$(dirname $my_file)"
 
@@ -14,11 +16,11 @@ export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
 tar -xPf step-2.tgz
 
 pushd $my_dir
-git clone https://github.com/juniper/contrail-build tools/build
-git clone https://github.com/juniper/contrail-generateDS tools/generateds
-git clone https://github.com/juniper/contrail-common src/contrail-common
+gitclone https://github.com/juniper/contrail-build tools/build
+gitclone https://github.com/juniper/contrail-generateDS tools/generateds
+gitclone https://github.com/juniper/contrail-common src/contrail-common
 # TODO: remove dependencies to controller
-git clone https://github.com/juniper/contrail-controller controller-template
+gitclone https://github.com/juniper/contrail-controller controller-template
 
 ln -s $CONTRAIL_BUILD_DIR build
 ln -s $CONTRAIL_BUILDROOT_DIR buildroot

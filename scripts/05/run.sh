@@ -1,5 +1,7 @@
 #!/bin/bash -xe
 
+source $my_dir/../common/functions
+
 my_file="$(readlink -e "$0")"
 my_dir="$(dirname $my_file)"
 
@@ -13,10 +15,10 @@ export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
 tar -xPf step-4.tgz
 
 pushd "$my_dir"
-git clone https://github.com/juniper/contrail-build tools/build
-git clone https://github.com/juniper/contrail-common src/contrail-common
-git clone https://github.com/juniper/contrail-controller controller
-git clone https://github.com/juniper/contrail-generateDS tools/generateds
+gitclone https://github.com/juniper/contrail-build tools/build
+gitclone https://github.com/juniper/contrail-common src/contrail-common
+gitclone https://github.com/juniper/contrail-controller controller
+gitclone https://github.com/juniper/contrail-generateDS tools/generateds
 
 test -L "./build" || ln -s $CONTRAIL_BUILD_DIR build
 test -L "./buildroot" || ln -s $CONTRAIL_BUILDROOT_DIR buildroot
