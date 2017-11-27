@@ -3,7 +3,7 @@
 %define         _contrailutils /opt/contrail/utils
 %define         _supervisordir /etc/contrail/supervisord_analytics_files
 %define         _distropkgdir %(pwd)/tools/packaging/common/control_files
-%define         _nodemgr_config controller/src/nodemgr/analytics_nodemgr
+%define         _nodemgr_config %(pwd)/controller/src/nodemgr/analytics_nodemgr
 
 %if 0%{?_buildTag:1}
 %define         _relstr      %{_buildTag}

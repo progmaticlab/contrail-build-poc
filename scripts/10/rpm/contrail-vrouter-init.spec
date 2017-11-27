@@ -2,7 +2,7 @@
 %define         _supervisordir /etc/contrail/supervisord_vrouter_files
 %define         _distropkgdir %(pwd)/tools/packaging/common/control_files
 %define 	_opt_bin /opt/contrail/bin
-%define         _nodemgr_config controller/src/nodemgr/vrouter_nodemgr
+%define         _nodemgr_config %(pwd)/controller/src/nodemgr/vrouter_nodemgr
 %if 0%{?_buildTag:1}
 %define         _relstr      %{_buildTag}
 %else

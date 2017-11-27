@@ -55,16 +55,6 @@ Contrail Nodemgr package
 # start from git root.. run this
 #       git rev-parse --show-toplevel > %{SOURCE0}
 
-# make sure we are in ctrlplane repo
-# gitrepo=$(basename $(git remote show origin | grep "Fetch URL" | cut -d: -f3 ))
-# if [ x$gitrepo != xctrlplane.git ]; then
-gitrepo=contrail-controller
-grep $gitrepo %{_builddir}/.git/config &> /dev/null
-if [ $? -ne 0 ]; then
-    echo "Please use rpmbuild --define \"_builddir <git_sandbox>\""
-    exit -1
-fi
-
 %install
 # Setup directories
 pushd %{_builddir}/..

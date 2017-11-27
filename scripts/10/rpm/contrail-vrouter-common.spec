@@ -2,7 +2,7 @@
 %define         _servicedir  /usr/lib/systemd/system
 %define         _supervisordir /etc/contrail/supervisord_vrouter_files
 %define         _distropkgdir %(pwd)/tools/packaging/common/control_files
-%define         _controllersrcdir controller/src
+%define         _controllersrcdir %(pwd)/controller/src
 
 %if 0%{?_buildTag:1}
 %define         _relstr      %{_buildTag}

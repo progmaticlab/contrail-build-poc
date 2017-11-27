@@ -28,11 +28,12 @@ DEST_MODULE_LOCATION[0]="/kernel/net/vrouter"
 AUTOINSTALL="yes"
 EOF
 
-rpmbuild -ba --define "_srcVer 4.0.1" --define "_buildTag 1" --define "_sbtop $(pwd)" --define "_prebuilddir $CONTRAIL_BUILDROOT_DIR" "$my_dir/contrail.spec"
+rpmbuild -ba --define "_srcVer 4.0.1" --define "_buildTag 1" --define "_sbtop $(pwd)" --define "_prebuilddir $CONTRAIL_BUILDROOT_DIR" "$my_dir/rpm/contrail.spec"
 
 # build other packages:
 # TODO: remove this clone. now it's needed for init files.
 git clone https://github.com/juniper/contrail-packaging tools/packaging
+git clone https://github.com/juniper/contrail-controller controller
 
 set +x
 logdir="$WORKSPACE/log"
@@ -41,7 +42,7 @@ mkdir -p $logdir
 CMD="rpmbuild -ba --define '_srcVer 4.0.1' --define '_buildTag 1' --define '_sbtop $(pwd)' --define '_prebuilddir $CONTRAIL_BUILDROOT_DIR'"
 SPEC_DIR="$my_dir/rpm"
 # openstack plugins
-for pkg in contrail-nova-vif neutron-plugin-contrail ; do
+for pkg in neutron-plugin-contrail ; do
   $CMD "$SPEC_DIR/$pkg.spec" &> $logdir/rpm-$pkg.log
 done
 # vrouter
@@ -49,9 +50,7 @@ for pkg in vrouter-common vrouter-dpdk vrouter-dpdk-init vrouter-init ; do
   $CMD "$SPEC_DIR/contrail-$pkg.spec" &> $logdir/rpm-contrail-$pkg.log
 done
 # nodemgr
-for pkg in nodemgr ; do
-  $CMD "$SPEC_DIR/contrail-$pkg.spec" &> $logdir/rpm-contrail-$pkg.log
-done
+$CMD --define "_builddir $CONTRAIL_BUILD_DIR" "$SPEC_DIR/contrail-nodemgr.spec" &> $logdir/rpm-contrail-nodemgr.log
 # webui
 for pkg in web-controller web-core ; do
   $CMD "$SPEC_DIR/contrail-$pkg.spec" &> $logdir/rpm-contrail-$pkg.log
