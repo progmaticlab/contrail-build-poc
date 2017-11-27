@@ -15,7 +15,7 @@ export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
 mkdir -p $CONTRAIL_BUILD_DIR
 mkdir -p $CONTRAIL_BUILDROOT_DIR
 
-PACKAGES="autoconf automake bison boost-devel bzip2 cmake cppunit-devel cyrus-sasl cyrus-sasl-devel cyrus-sasl-lib flex gcc gcc-c++ git kernel-devel libcurl-devel libnl-devel libnl3-devel libpcap libpcap-devel libxml2-devel lz4-devel make net-snmp-python nodejs openssl-devel patch protobuf protobuf-compiler protobuf-devel python-devel python-lxml python-setuptools python-sphinx rpm-build scons tbb-devel unzip vim wget zlib-devel libtool rpmdevtools tokyocabinet-devel libevent-devel gperf libxml2-python python-virtualenv libxslt-devel"
+PACKAGES="autoconf automake bison boost-devel bzip2 cmake cppunit-devel cyrus-sasl cyrus-sasl-devel cyrus-sasl-lib flex gcc gcc-c++ git kernel-devel libcurl-devel libnl-devel libnl3-devel libpcap libpcap-devel libuv libuv-devel libxml2-devel lz4-devel make net-snmp-python nodejs openssl-devel patch protobuf protobuf-compiler protobuf-devel python-devel python-lxml python-setuptools python-sphinx rpm-build scons tbb-devel unzip vim wget zlib-devel libtool rpmdevtools tokyocabinet-devel libevent-devel gperf libxml2-python python-virtualenv libxslt-devel"
 
 sudo yum -y install epel-release
 sudo yum -y update
@@ -38,11 +38,9 @@ if ! yum info libzookeeper-devel | grep installed ; then
   rm -rf $HOME/rpmbuild
 fi
 
-wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.8.0/libuv-1.8.0-1.el7.centos.x86_64.rpm
-wget http://downloads.datastax.com/cpp-driver/centos/7/dependencies/libuv/v1.8.0/libuv-devel-1.8.0-1.el7.centos.x86_64.rpm
 wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.4.2/cassandra-cpp-driver-2.4.2-1.el7.centos.x86_64.rpm
 wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.4.2/cassandra-cpp-driver-devel-2.4.2-1.el7.centos.x86_64.rpm
-sudo rpm -ivh cassandra-cpp-*.rpm libuv-*.rpm
+sudo rpm -ivh cassandra-cpp-*.rpm 
 
 git clone https://github.com/edenhill/librdkafka
 pushd librdkafka/
