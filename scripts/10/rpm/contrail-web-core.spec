@@ -84,7 +84,7 @@ mkdir -p %{buildroot}%{_contrailetc}
 
 #cp -r -p %{_sourcedir}/%{name}/contrail-ui/* %{buildroot}%{_contrailwebsrc}/
 pushd %{_builddir}/..
-cp -r -p contrail-web-core/* %{buildroot}%{_contrailwebsrc}/
+cp -r -p %(pwd)/contrail-web-core/* %{buildroot}%{_contrailwebsrc}/
 
 %if 0%{?fedora} >= 17
 cp -p %{_distropkgdir}/supervisor-webui.service  %{buildroot}%{_servicedir}/supervisor-webui.service

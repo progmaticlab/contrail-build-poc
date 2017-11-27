@@ -57,7 +57,7 @@ rm -rf %{buildroot}%{_contrailwebsrc}
 mkdir -p %{buildroot}%{_contrailwebsrc}
 
 pushd %{_builddir}/..
-cp -r -p contrail-web-controller/* %{buildroot}%{_contrailwebsrc}/
+cp -r -p %(pwd)/contrail-web-controller/* %{buildroot}%{_contrailwebsrc}/
 
 ln -s %{_libdir}/node_modules %{buildroot}%{_contrailwebsrc}/node_modules
 

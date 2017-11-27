@@ -34,6 +34,8 @@ rpmbuild -ba --define "_srcVer 4.0.1" --define "_buildTag 1" --define "_sbtop $(
 # TODO: remove this clone. now it's needed for init files.
 git clone https://github.com/juniper/contrail-packaging tools/packaging
 git clone https://github.com/juniper/contrail-controller controller
+git clone https://github.com/juniper/contrail-web-controller
+git clone https://github.com/juniper/contrail-web-core
 
 set +x
 logdir="$WORKSPACE/log"
