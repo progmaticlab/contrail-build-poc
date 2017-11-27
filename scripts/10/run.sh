@@ -18,6 +18,9 @@ test -L "./buildroot" || ln -s $CONTRAIL_BUILDROOT_DIR buildroot
 
 git clone https://github.com/juniper/contrail-packages tools/packages
 
+KVD=`rpm -q kernel-devel --queryformat "%{VERSION}-%{RELEASE}.x86_64\n" | sort -n`
+a=(${KVD//./ })
+kver="${a[0]}.${a[1]}.${a[2]}.${a[5]}.${a[6]}"
 cat >tools/packages/rpm/contrail/dkms.conf.in <<EOF
 PACKAGE_NAME=vrouter
 PACKAGE_VERSION="__VERSION__"
