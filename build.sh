@@ -7,10 +7,10 @@ CONTRAIL_VERSION=${CONTRAIL_VERSION:-"4.0.2.0-35"}
 export CONTRAIL_RELEASE=`echo $CONTRAIL_VERSION | cut -d '-' -f 1`
 export CONTRAIL_BUILD=`echo $CONTRAIL_VERSION | cut -d '-' -f 2`
 
-test -f $my_dir/reporevisions && rm -f reporevisions
+test -f $HOME/reporevisions && rm -f $HOME/reporevisions
 for i in `grep -rh "gitclone" scripts/* | grep -Eo "https://[a-zA-Z0-9./?=_-]*" | sort | uniq` ; do
    r=$(git ls-remote $i refs/heads/master | awk '{print $1}')
-   echo "$i $r" >> $my_dir/reporevisions
+   echo "$i $r" >> $HOME/reporevisions
 done
 
 touch $HOME/build.log
