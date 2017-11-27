@@ -12,5 +12,5 @@ conf = Configure(DefaultEnvironment(ENV = os.environ))
 env = rules.SetupBuildEnvironment(conf)
 SConscript('openstack/nova_contrail_vif/SConscript',
            variant_dir='build/noarch/nova_contrail_vif')
-SConscript('openstack/neutron_plugin/SConscript',
-           variant_dir='build/noarch/neutron_plugin')
+#SConscript('openstack/neutron_plugin/SConscript',
+#           variant_dir='build/noarch/neutron_plugin')

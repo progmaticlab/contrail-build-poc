@@ -31,7 +31,8 @@ EOF
 rpmbuild -ba --define "_srcVer 4.0.1" --define "_buildTag 1" --define "_sbtop $(pwd)" --define "_prebuilddir $CONTRAIL_BUILDROOT_DIR" "$my_dir/rpm/contrail.spec"
 
 # build other packages:
-# TODO: remove this clone. now it's needed for init files.
+# TODO: remove all these clones.
+# now it's needed for init files.
 git clone https://github.com/juniper/contrail-packaging tools/packaging
 # this repo is used for taking another init files
 git clone https://github.com/juniper/contrail-controller controller
@@ -43,6 +44,8 @@ cp -r contrail-web-controller $HOME/rpmbuild/SOURCES/
 cp -r contrail-web-core $HOME/rpmbuild/SOURCES/
 # fetch packages do not ini node-saas module
 patch -i web-core.patch contrail-web-core/dev-install.sh
+# source code for neutron-plugin
+git clone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_plugin
 
 set +x
 logdir="$WORKSPACE/log"
