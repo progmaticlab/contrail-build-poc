@@ -7,7 +7,7 @@
 %define		_servicedir  		/usr/lib/systemd/system
 %endif
 %define		_nodemodules		node_modules/
-%define		_config			contrail-web-core/config
+%define		_config			%(pwd)/contrail-web-core/config
 %define		_contrailuitoolsdir	src/tools
 %define		_supervisordir		/etc/contrail/supervisord_webui_files
 %define		_websslpath		/etc/contrail/webui_ssl

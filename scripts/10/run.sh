@@ -33,9 +33,16 @@ rpmbuild -ba --define "_srcVer 4.0.1" --define "_buildTag 1" --define "_sbtop $(
 # build other packages:
 # TODO: remove this clone. now it's needed for init files.
 git clone https://github.com/juniper/contrail-packaging tools/packaging
+# this repo is used for taking another init files
 git clone https://github.com/juniper/contrail-controller controller
+# these repos are used for building node/npm packages
 git clone https://github.com/juniper/contrail-web-controller
 git clone https://github.com/juniper/contrail-web-core
+# these items are used to build rpm-s
+cp -r contrail-web-controller $HOME/rpmbuild/SOURCES/
+cp -r contrail-web-core $HOME/rpmbuild/SOURCES/
+# fetch packages do not ini node-saas module
+patch -i web-core.patch contrail-web-core/dev-install.sh
 
 set +x
 logdir="$WORKSPACE/log"
@@ -54,6 +61,9 @@ done
 # nodemgr
 $CMD --define "_builddir $CONTRAIL_BUILD_DIR" "$SPEC_DIR/contrail-nodemgr.spec" &> $logdir/rpm-contrail-nodemgr.log
 # webui
+pushd contrail-webui-core
+make package REPO=../contrail-web-controller,webController
+popd
 for pkg in web-controller web-core ; do
   $CMD "$SPEC_DIR/contrail-$pkg.spec" &> $logdir/rpm-contrail-$pkg.log
 done
