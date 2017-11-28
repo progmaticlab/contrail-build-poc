@@ -51,7 +51,7 @@ patch -i web-core.patch contrail-web-core/dev-install.sh
 # source code for neutron-plugin
 gitclone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_plugin
 
-set +x
+set +e
 logdir="$WORKSPACE/logs/rpm/"
 mkdir -p $logdir
 
