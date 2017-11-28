@@ -1,8 +1,10 @@
 # view contents of rpm file: rpm -qlp <filename>.rpm
 
 %define         _contrailopt /opt/contrail
+%define         _toolsdir     %(pwd)/tools
 %define         _distropkgdir %(pwd)/tools/packaging/common/control_files
-%define         _provdir      %{_builddir}/../tools/provisioning
+%define         _provdir      %(pwd)/tools/provisioning
+%define         _ctrldir      %(pwd)/controller
 %define         _is_centos65  %(grep -c 6.5 /etc/issue)
 
 %if 0%{?_buildTag:1}
@@ -75,12 +77,12 @@ BuildRequires:  systemd-units
 # make sure we are in ctrlplane repo
 # gitrepo=$(basename $(git remote show origin | grep "Fetch URL" | cut -d: -f3 ))
 # if [ x$gitrepo != xctrlplane.git ]; then
-gitrepo=contrail-controller
-grep $gitrepo .git/config &> /dev/null
-if [ $? -ne 0 ]; then
-    echo "please run rpmbuild from ctrlplane git tree"
-    exit -1
-fi
+#gitrepo=contrail-controller
+#grep $gitrepo .git/config &> /dev/null
+#if [ $? -ne 0 ]; then
+#    echo "please run rpmbuild from ctrlplane git tree"
+#    exit -1
+#fi
 
 
 %build
@@ -90,12 +92,12 @@ rm -rf ContrailProvisioning-0.1dev
 %{__python} setup.py sdist
 popd
 
-pushd src/config
-tar cvfz ../../cfgm_utils.tgz utils
+pushd %{_ctrldir}/src/config
+tar cvfz %{_ctrldir}/cfgm_utils.tgz utils
 popd
 
-pushd src/dns/scripts
-tar cvfz ../../../dns_scripts.tgz *
+pushd %{_ctrldir}/src/dns/scripts
+tar cvfz %{_ctrldir}/dns_scripts.tgz *
 popd
 
 %install
@@ -112,13 +114,13 @@ install -d -m 755 %{buildroot}%{_contrailopt}/python_packages
 # install files
 pushd %{_builddir}/..
 echo BUILDID=`echo %{_relstr} | cut -d "~" -f1` > %{buildroot}%{_contrailopt}/contrail_packages/VERSION
-install -p -m 755 tools/packaging/build/README %{buildroot}%{_contrailopt}/contrail_packages/README
-install -p -m 755 tools/packaging/common/control_files/contrail_ifrename.sh %{buildroot}%{_contrailopt}/bin/getifname.sh
+install -p -m 755 %{_toolsdir}/packaging/build/README %{buildroot}%{_contrailopt}/contrail_packages/README
+install -p -m 755 %{_toolsdir}/packaging/common/control_files/contrail_ifrename.sh %{buildroot}%{_contrailopt}/bin/getifname.sh
 popd
 
 # install etc files
-install -p -m 644 cfgm_utils.tgz  %{buildroot}%{_contrailopt}/cfgm_utils.tgz
-install -p -m 644 dns_scripts.tgz  %{buildroot}%{_contrailopt}/dns_scripts.tgz
+install -p -m 644 %{_ctrldir}/cfgm_utils.tgz  %{buildroot}%{_contrailopt}/cfgm_utils.tgz
+install -p -m 644 %{_ctrldir}/dns_scripts.tgz  %{buildroot}%{_contrailopt}/dns_scripts.tgz
 pushd %{_provdir}
 tar zxf dist/ContrailProvisioning-0.1dev.tar.gz
 cd ContrailProvisioning-0.1dev
@@ -127,7 +129,9 @@ popd
 
 install -d -m 755 %{buildroot}/etc/contrail
 if [ %{_flist} = None ]; then 
-    %{_builddir}/../tools/packaging/build/create_pkg_list_file.py --sku %{_sku} %{buildroot}/etc/contrail/rpm_list.txt
+    pushd %{_toolsdir}/packaging
+    build/create_pkg_list_file.py --sku %{_sku} %{buildroot}/etc/contrail/rpm_list.txt -d centoslinux71
+    popd
 else 
     cp %{_flist} %{buildroot}/etc/contrail/rpm_list.txt
 fi

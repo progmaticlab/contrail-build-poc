@@ -58,10 +58,13 @@ cp -r contrail-web-core $HOME/rpmbuild/SOURCES/
 patch -i web-core.patch contrail-web-core/dev-install.sh
 # source code for neutron-plugin
 gitclone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_plugin
+# additional code for contrail-setup package
+gitclone https://github.com/Juniper/contrail-provisioning tools/provisioning
 
 set +e
 # contrail-setup
-eval $CMD \"$SPEC_DIR/contrail-setup.spec\" |& tee $logdir/rpm-contrail-setup.log
+# TODO: last OS version in centoslinux71 is mitaka...
+eval $CMD --define \"_skuTag mitaka\" \"$SPEC_DIR/contrail-setup.spec\" |& tee $logdir/rpm-contrail-setup.log
 # openstack plugins
 for pkg in neutron-plugin-contrail ; do
   eval $CMD \"$SPEC_DIR/$pkg.spec\" |& tee $logdir/rpm-$pkg.log
