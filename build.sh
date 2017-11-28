@@ -6,8 +6,9 @@ my_dir="$(dirname $my_file)"
 CONTRAIL_VERSION=${CONTRAIL_VERSION:-"4.0.2.0-35"}
 export CONTRAIL_RELEASE=`echo $CONTRAIL_VERSION | cut -d '-' -f 1`
 export CONTRAIL_BUILD=`echo $CONTRAIL_VERSION | cut -d '-' -f 2`
+export WORKSPACE=${WORKSPACE:-$HOME}
 
-test -f $HOME/reporevisions && rm -f $HOME/reporevisions
+test -f $WORKSPACE/reporevisions && rm -f $WORKSPACE/reporevisions
 for i in `grep -rh "gitclone" scripts/* | grep -Eo "https://[a-zA-Z0-9./?=_-]*" | sort | uniq` ; do
    r=$(git ls-remote $i refs/heads/master | awk '{print $1}')
    echo "$i $r" >> $HOME/reporevisions
