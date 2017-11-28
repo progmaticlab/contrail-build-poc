@@ -39,6 +39,13 @@ if ! yum info libzookeeper-devel | grep installed ; then
   rm -rf $HOME/rpmbuild
 fi
 
+if ! yum info python-consistent_hash | grep installed ; then
+  rpmdev-setuptree
+  spectool -g -R ./python-consistent_hash.spec
+  rpmbuild -ba ./python-consistent_hash.spec
+  sudo yum install -y $HOME/rpmbuild/RPMS/x86_64/python-consistent_hash-1.0-1.0contrail.x86_64.rpm
+fi
+
 wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.4.2/cassandra-cpp-driver-2.4.2-1.el7.centos.x86_64.rpm
 wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.4.2/cassandra-cpp-driver-devel-2.4.2-1.el7.centos.x86_64.rpm
 sudo yum install -y cassandra-cpp-*.rpm 
