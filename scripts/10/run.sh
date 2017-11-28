@@ -52,7 +52,7 @@ patch -i web-core.patch contrail-web-core/dev-install.sh
 gitclone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_plugin
 
 set +x
-logdir="$WORKSPACE/log"
+logdir="$WORKSPACE/logs/rpm/"
 mkdir -p $logdir
 
 CMD="rpmbuild -ba --define '_srcVer ${CONTRAIL_RELEASE:-4.0.0.0}' --define '_buildTag ${CONTRAIL_BUILD:-1}' --define '_sbtop $(pwd)' --define '_prebuilddir $CONTRAIL_BUILDROOT_DIR'"
