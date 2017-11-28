@@ -6,6 +6,9 @@ source $my_dir/../common/functions
 
 echo "INFO: start time $(date)"
 
+logdir="$WORKSPACE/logs/rpm/"
+mkdir -p $logdir
+
 export WORKSPACE=${WORKSPACE:-$HOME}
 cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
@@ -16,7 +19,7 @@ pushd "$my_dir"
 test -L "./build" || ln -s $CONTRAIL_BUILD_DIR build
 test -L "./buildroot" || ln -s $CONTRAIL_BUILDROOT_DIR buildroot
 
-git clone https://github.com/juniper/contrail-packages tools/packages
+gitclone https://github.com/juniper/contrail-packages tools/packages
 
 KVD=`rpm -q kernel-devel --queryformat "%{VERSION}-%{RELEASE}.x86_64\n" | sort -n`
 a=(${KVD//./ })
@@ -32,7 +35,11 @@ DEST_MODULE_LOCATION[0]="/kernel/net/vrouter"
 AUTOINSTALL="yes"
 EOF
 
-rpmbuild -ba --define "_srcVer 4.0.1" --define "_buildTag 1" --define "_sbtop $(pwd)" --define "_prebuilddir $CONTRAIL_BUILDROOT_DIR" "$my_dir/rpm/contrail.spec"
+CMD="rpmbuild -ba --define '_srcVer ${CONTRAIL_RELEASE:-4.0.0.0}' --define '_buildTag ${CONTRAIL_BUILD:-1}' --define '_sbtop $my_dir' --define '_prebuilddir $CONTRAIL_BUILDROOT_DIR'"
+SPEC_DIR="$my_dir/rpm"
+
+# eval must be here. rpmbuild can't manage escaped quotes in defines
+eval $CMD \"$SPEC_DIR/contrail.spec\" |& tee $logdir/rpm-contrail.spec
 
 # build other packages:
 # TODO: remove all these clones.
@@ -43,6 +50,7 @@ gitclone https://github.com/juniper/contrail-controller controller
 # these repos are used for building node/npm packages
 gitclone https://github.com/juniper/contrail-web-controller
 gitclone https://github.com/juniper/contrail-web-core
+gitclone https://github.com/juniper/contrail-webui-third-party
 # these items are used to build rpm-s
 cp -r contrail-web-controller $HOME/rpmbuild/SOURCES/
 cp -r contrail-web-core $HOME/rpmbuild/SOURCES/
@@ -52,31 +60,26 @@ patch -i web-core.patch contrail-web-core/dev-install.sh
 gitclone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_plugin
 
 set +e
-logdir="$WORKSPACE/logs/rpm/"
-mkdir -p $logdir
-
-CMD="rpmbuild -ba --define '_srcVer ${CONTRAIL_RELEASE:-4.0.0.0}' --define '_buildTag ${CONTRAIL_BUILD:-1}' --define '_sbtop $(pwd)' --define '_prebuilddir $CONTRAIL_BUILDROOT_DIR'"
-SPEC_DIR="$my_dir/rpm"
 # openstack plugins
 for pkg in neutron-plugin-contrail ; do
-  $CMD "$SPEC_DIR/$pkg.spec" &> $logdir/rpm-$pkg.log
+  eval $CMD \"$SPEC_DIR/$pkg.spec\" |& tee $logdir/rpm-$pkg.log
 done
 # vrouter
 for pkg in vrouter-common vrouter-dpdk vrouter-dpdk-init vrouter-init ; do
-  $CMD --define "_skuTag $OPENSTACK_VERSION" "$SPEC_DIR/contrail-$pkg.spec" &> $logdir/rpm-contrail-$pkg.log
+  eval $CMD \"$SPEC_DIR/contrail-$pkg.spec\" |& tee $logdir/rpm-contrail-$pkg.log
 done
 # nodemgr
-$CMD --define "_builddir $CONTRAIL_BUILD_DIR" "$SPEC_DIR/contrail-nodemgr.spec" &> $logdir/rpm-contrail-nodemgr.log
+eval $CMD --define \"_builddir $CONTRAIL_BUILD_DIR\" \"$SPEC_DIR/contrail-nodemgr.spec\" |& tee $logdir/rpm-contrail-nodemgr.log
 # webui
-pushd contrail-webui-core
-make package REPO=../contrail-web-controller,webController
+pushd contrail-web-core
+make package REPO=../contrail-web-controller,webController |& tee $logdir/rpm-contrail-web.log
 popd
 for pkg in web-controller web-core ; do
-  $CMD "$SPEC_DIR/contrail-$pkg.spec" &> $logdir/rpm-contrail-$pkg.log
+  eval $CMD \"$SPEC_DIR/contrail-$pkg.spec\" |& tee $logdir/rpm-contrail-$pkg.log
 done
 #openstack
 for pkg in analytics config config-common control vrouter webui ; do
-  $CMD "$SPEC_DIR/contrail-openstack-$pkg.spec" &> $logdir/rpm-contrail-openstack-$pkg.log
+  eval $CMD --define \"_skuTag $OPENSTACK_VERSION\" \"$SPEC_DIR/contrail-openstack-$pkg.spec\" |& tee $logdir/rpm-contrail-openstack-$pkg.log
 done
 
 popd

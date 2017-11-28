@@ -4,8 +4,8 @@
 %define _usr_bin      /usr/bin/
 %define _etc_init     /etc/init/
 %define _supervisorconf /etc/contrail/supervisord_vrouter_files
-%define SB_TOP          %{_builddir}/../
-%define _nodemgr_config %{_builddir}/../controller/src/nodemgr/vrouter_nodemgr
+%define SB_TOP          %(pwd)
+%define _nodemgr_config %(pwd)/controller/src/nodemgr/vrouter_nodemgr
 
 %if 0%{?_buildTag:1}
 %define _relstr %{_buildTag}
