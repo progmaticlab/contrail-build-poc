@@ -60,6 +60,8 @@ patch -i web-core.patch contrail-web-core/dev-install.sh
 gitclone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_plugin
 
 set +e
+# contrail-setup
+eval $CMD \"$SPEC_DIR/contrail-setup.spec\" |& tee $logdir/rpm-contrail-setup.log
 # openstack plugins
 for pkg in neutron-plugin-contrail ; do
   eval $CMD \"$SPEC_DIR/$pkg.spec\" |& tee $logdir/rpm-$pkg.log
