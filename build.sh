@@ -16,7 +16,7 @@ done
 mv $HOME/reporevisions $HOME/reporevisions.bak
 cp $my_dir/reporevisions-4.1 $HOME/reporevisions
 echo "INFO: Repo revisions diff for now for R4.1"
-diff $HOME/reporevisions.bak $HOME/reporevisions
+diff $HOME/reporevisions.bak $HOME/reporevisions || /bin/true
 
 touch $HOME/build.log
 for item in '01' '02' '03' '04' '05' '06' '10' ; do
