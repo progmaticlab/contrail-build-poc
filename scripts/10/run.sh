@@ -6,20 +6,20 @@ source $my_dir/../common/functions
 
 echo "INFO: start time $(date)"
 
-logdir="$WORKSPACE/logs/rpm/"
-mkdir -p $logdir
-
 export WORKSPACE=${WORKSPACE:-$HOME}
 cd $WORKSPACE
 export CONTRAIL_BUILD_DIR=$WORKSPACE/build
 export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
+
+logdir="$WORKSPACE/logs/rpm/"
+mkdir -p $logdir
+
 tar -xPf step-6.tgz
 
 pushd "$my_dir"
 test -L "./build" || ln -s $CONTRAIL_BUILD_DIR build
 test -L "./buildroot" || ln -s $CONTRAIL_BUILDROOT_DIR buildroot
-
-gitclone https://github.com/juniper/contrail-packages tools/packages
+tar -xPf $WORKSPACE/step-6-repos.tgz
 
 KVD=`rpm -q kernel-devel --queryformat "%{VERSION}-%{RELEASE}.x86_64\n" | sort -n`
 a=(${KVD//./ })
@@ -41,25 +41,9 @@ SPEC_DIR="$my_dir/rpm"
 # eval must be here. rpmbuild can't manage escaped quotes in defines
 eval $CMD \"$SPEC_DIR/contrail.spec\" |& tee $logdir/rpm-contrail.spec
 
-# build other packages:
-# TODO: remove all these clones.
-# now it's needed for init files.
-gitclone https://github.com/juniper/contrail-packaging tools/packaging
-# this repo is used for taking another init files
-gitclone https://github.com/juniper/contrail-controller controller
-# these repos are used for building node/npm packages
-gitclone https://github.com/juniper/contrail-web-controller
-gitclone https://github.com/juniper/contrail-web-core
-gitclone https://github.com/juniper/contrail-webui-third-party
 # these items are used to build rpm-s
 cp -r contrail-web-controller $HOME/rpmbuild/SOURCES/
 cp -r contrail-web-core $HOME/rpmbuild/SOURCES/
-# fetch packages do not ini node-saas module
-patch -i web-core.patch contrail-web-core/dev-install.sh
-# source code for neutron-plugin
-gitclone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_plugin
-# additional code for contrail-setup package
-gitclone https://github.com/Juniper/contrail-provisioning tools/provisioning
 
 set +e
 # contrail-setup
@@ -76,9 +60,9 @@ done
 # nodemgr
 eval $CMD --define \"_builddir $CONTRAIL_BUILD_DIR\" \"$SPEC_DIR/contrail-nodemgr.spec\" |& tee $logdir/rpm-contrail-nodemgr.log
 # webui
-pushd contrail-web-core
-make package REPO=../contrail-web-controller,webController |& tee $logdir/rpm-contrail-web.log
-popd
+#pushd contrail-web-core
+#make package REPO=../contrail-web-controller,webController |& tee $logdir/rpm-contrail-web.log
+#popd
 for pkg in web-controller web-core ; do
   eval $CMD \"$SPEC_DIR/contrail-$pkg.spec\" |& tee $logdir/rpm-contrail-$pkg.log
 done
