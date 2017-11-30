@@ -48,23 +48,14 @@ eval $CMD \"$SPEC_DIR/contrail.spec\" |& tee $logdir/rpm-contrail.spec
 gitclone https://github.com/juniper/contrail-packaging tools/packaging
 # this repo is used for taking another init files
 gitclone https://github.com/juniper/contrail-controller controller
-# these repos are used for building node/npm packages
-gitclone https://github.com/juniper/contrail-web-controller
-gitclone https://github.com/juniper/contrail-web-core
-gitclone https://github.com/juniper/contrail-webui-third-party
-# these items are used to build rpm-s. copy them before building the package
-cp -r contrail-web-controller $HOME/rpmbuild/SOURCES/
-cp -r contrail-web-core $HOME/rpmbuild/SOURCES/
 # source code for neutron-plugin
 gitclone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_plugin
 # additional code for contrail-setup package
 gitclone https://github.com/Juniper/contrail-provisioning tools/provisioning
 
-# fetch packages do not initialize node-saas module
-patch -i web-core.patch contrail-web-core/dev-install.sh
-pushd contrail-web-core
-make package REPO=../contrail-web-controller,webController |& tee $logdir/rpm-contrail-web.log
-popd
+# these items are used to build rpm-s. copy them before building the package
+ln -s $CONTRAIL_BUILD_DIR/src/contrail-web-controller $HOME/rpmbuild/SOURCES/contrail-web-controller
+ln -s $CONTRAIL_BUILD_DIR/src/contrail-web-core $HOME/rpmbuild/SOURCES/contrail-web-core
 
 set +e
 # contrail-setup

@@ -28,7 +28,20 @@ gitclone https://github.com/juniper/contrail-nova-vif-driver openstack/nova_cont
 scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR install
 scons -j $JOBS_COUNT --root=$CONTRAIL_BUILDROOT_DIR nova-contrail-vif
 
-rm -rf tools openstack contrail-ceilometer-plugin
+# these repos are used for building node/npm packages
+gitclone https://github.com/juniper/contrail-web-controller $CONTRAIL_BUILD_DIR/src/contrail-web-controller
+gitclone https://github.com/juniper/contrail-web-core $CONTRAIL_BUILD_DIR/src/contrail-web-core
+gitclone https://github.com/juniper/contrail-webui-third-party $CONTRAIL_BUILD_DIR/src/contrail-webui-third-party
+# fetch packages do not initialize node-saas module
+pushd $CONTRAIL_BUILD_DIR/src
+patch -i $my_dir/web-core.patch contrail-web-core/dev-install.sh
+pushd contrail-web-core
+make package REPO=../contrail-web-controller,webController |& tee $logdir/rpm-make-contrail-webController.log
+make package REPO=../contrail-web-core |& tee $logdir/rpm-make-contrail-webCore.log
+popd
+popd
+
+rm -rf tools openstack contrail-ceilometer-plugin $CONTRAIL_BUILD_DIR/src/contrail-webui-third-party
 
 popd
 

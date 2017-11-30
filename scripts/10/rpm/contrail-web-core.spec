@@ -1,13 +1,14 @@
 # view contents of rpm file: rpm -qlp <filename>.rpm
 
-%define         _distropkgdir %(pwd)/tools/packaging/common/control_files
+%define         _distropkgdir           %(pwd)/tools/packaging/common/control_files
+%define         _src                    %{_rpmDir}/src
 %define		_contrailetc 		/etc/contrail
 %define		_contrailwebsrc 	/usr/src/contrail/contrail-web-core
 %if 0%{?fedora} >= 17
 %define		_servicedir  		/usr/lib/systemd/system
 %endif
 %define		_nodemodules		node_modules/
-%define		_config			%(pwd)/contrail-web-core/config
+%define		_config			%{_src}/contrail-web-core/config
 %define		_contrailuitoolsdir	src/tools
 %define		_supervisordir		/etc/contrail/supervisord_webui_files
 %define		_websslpath		/etc/contrail/webui_ssl
@@ -84,7 +85,7 @@ mkdir -p %{buildroot}%{_contrailetc}
 
 #cp -r -p %{_sourcedir}/%{name}/contrail-ui/* %{buildroot}%{_contrailwebsrc}/
 pushd %{_builddir}/..
-cp -r -p %(pwd)/contrail-web-core/* %{buildroot}%{_contrailwebsrc}/
+cp -r -p %{_src}/contrail-web-core/* %{buildroot}%{_contrailwebsrc}/
 
 %if 0%{?fedora} >= 17
 cp -p %{_distropkgdir}/supervisor-webui.service  %{buildroot}%{_servicedir}/supervisor-webui.service

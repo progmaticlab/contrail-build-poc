@@ -1,6 +1,7 @@
 # view contents of rpm file: rpm -qlp <filename>.rpm
 
-%define		_contrailwebsrc 	/usr/src/contrail/contrail-web-controller
+%define         _src               %{_rpmdir}/src
+%define         _contrailwebsrc    /usr/src/contrail/contrail-web-controller
 
 %if 0%{?_buildTag:1}
 %define         _relstr      %{_buildTag}
@@ -57,7 +58,7 @@ rm -rf %{buildroot}%{_contrailwebsrc}
 mkdir -p %{buildroot}%{_contrailwebsrc}
 
 pushd %{_builddir}/..
-cp -r -p %(pwd)/contrail-web-controller/* %{buildroot}%{_contrailwebsrc}/
+cp -r -p %{_src}/contrail-web-controller/* %{buildroot}%{_contrailwebsrc}/
 
 ln -s %{_libdir}/node_modules %{buildroot}%{_contrailwebsrc}/node_modules
 
