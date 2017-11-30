@@ -39,6 +39,7 @@ if ! yum info libzookeeper-devel | grep installed ; then
   spectool -g -R ./zookeeper.spec
   rpmbuild -ba ./zookeeper.spec
   sudo yum install -y $HOME/rpmbuild/RPMS/x86_64/libzookeeper-*.rpm
+  rm -f $HOME/rpmbuild/RPMS/x86_64/zookeeper*
 fi
 
 # TODO: if it is not needed for build then move it to last step. if it is needed then leave here copying to the system only.
