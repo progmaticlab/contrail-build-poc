@@ -36,6 +36,7 @@ gitclone https://github.com/juniper/contrail-webui-third-party $CONTRAIL_BUILD_D
 pushd $CONTRAIL_BUILD_DIR/src
 patch -i $my_dir/web-core.patch contrail-web-core/dev-install.sh
 pushd contrail-web-core
+make repos
 make package REPO=../contrail-web-controller,webController |& tee $logdir/rpm-make-contrail-webController.log
 make package REPO=../contrail-web-core |& tee $logdir/rpm-make-contrail-webCore.log
 popd
