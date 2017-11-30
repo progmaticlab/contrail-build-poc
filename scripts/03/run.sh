@@ -66,7 +66,7 @@ rm -rf controller-template src tools
 
 popd
 
-tar -czPf step-3.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
-rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
+tar -czPf step-3.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR $HOME/rpmbuild/RPMS
+rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR $HOME/rpmbuild
 
 echo "INFO: end time $(date)"

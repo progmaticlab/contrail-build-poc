@@ -44,7 +44,9 @@ eval $CMD \"$SPEC_DIR/contrail.spec\" |& tee $logdir/rpm-contrail.spec
 
 # build other packages:
 # TODO: remove all these clones.
-# now it's needed for init files.
+# now it's needed for init files. - desicion was made. we must add copying config files 
+# to buildroot at steps 4, 5, 6 and here use them from buildroot
+# for systems' files we can clone something.
 gitclone https://github.com/juniper/contrail-packaging tools/packaging
 # this repo is used for taking another init files
 gitclone https://github.com/juniper/contrail-controller controller

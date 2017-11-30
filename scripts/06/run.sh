@@ -45,7 +45,7 @@ rm -rf tools openstack contrail-ceilometer-plugin $CONTRAIL_BUILD_DIR/src/contra
 
 popd
 
-tar -czPf step-6.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
-rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR
+tar -czPf step-6.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR $HOME/rpmbuild/RPMS
+rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR $HOME/rpmbuild
 
 echo "INFO: end time $(date)"
