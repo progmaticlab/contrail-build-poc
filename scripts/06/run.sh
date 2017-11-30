@@ -34,9 +34,9 @@ gitclone https://github.com/juniper/contrail-web-core $CONTRAIL_BUILD_DIR/src/co
 gitclone https://github.com/juniper/contrail-webui-third-party $CONTRAIL_BUILD_DIR/src/contrail-webui-third-party
 # fetch packages do not initialize node-saas module
 pushd $CONTRAIL_BUILD_DIR/src
-patch -i $my_dir/web-core.patch contrail-web-core/dev-install.sh
 pushd contrail-web-core
 make repos
+patch -i $my_dir/web-core.patch dev-install.sh
 make package REPO=../contrail-web-controller,webController |& tee $logdir/rpm-make-contrail-webController.log
 make package REPO=../contrail-web-core |& tee $logdir/rpm-make-contrail-webCore.log
 popd
