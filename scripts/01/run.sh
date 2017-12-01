@@ -49,10 +49,10 @@ if ! yum info python-consistent_hash | grep installed ; then
   sudo yum install -y $HOME/rpmbuild/RPMS/x86_64/python-consistent_hash-1.0-1.0contrail.x86_64.rpm
 fi
 
-# TODO: pass version like ">=2.4 && <2.5" to last step for including to spec file
+# TODO: pass version like ">=2.8 && <2.9" to last step for including to spec file
 # and download it again at last step to place it to RPMS folder
-wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.4.2/cassandra-cpp-driver-2.4.2-1.el7.centos.x86_64.rpm
-wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.4.2/cassandra-cpp-driver-devel-2.4.2-1.el7.centos.x86_64.rpm
+wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.8.0/cassandra-cpp-driver-2.8.0-1.el7.centos.x86_64.rpm
+wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.8.0/cassandra-cpp-driver-devel-2.8.0-1.el7.centos.x86_64.rpm
 cp cassandra-cpp-*.rpm $HOME/rpmbuild/RPMS/x86_64/
 sudo yum install -y cassandra-cpp-*.rpm
 
