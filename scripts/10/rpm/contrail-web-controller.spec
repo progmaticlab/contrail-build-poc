@@ -1,6 +1,6 @@
 # view contents of rpm file: rpm -qlp <filename>.rpm
 
-%define         _src               %{_rpmdir}/src
+%define         _src               %{_builddir}/src
 %define         _contrailwebsrc    /usr/src/contrail/contrail-web-controller
 
 %if 0%{?_buildTag:1}

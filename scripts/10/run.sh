@@ -56,8 +56,8 @@ gitclone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_pl
 gitclone https://github.com/Juniper/contrail-provisioning tools/provisioning
 
 # these items are used to build rpm-s. copy them before building the package
-ln -s $CONTRAIL_BUILD_DIR/src/contrail-web-controller $HOME/rpmbuild/SOURCES/contrail-web-controller
-ln -s $CONTRAIL_BUILD_DIR/src/contrail-web-core $HOME/rpmbuild/SOURCES/contrail-web-core
+#ln -s $CONTRAIL_BUILD_DIR/src/contrail-web-controller $HOME/rpmbuild/SOURCES/contrail-web-controller
+#ln -s $CONTRAIL_BUILD_DIR/src/contrail-web-core $HOME/rpmbuild/SOURCES/contrail-web-core
 
 set +e
 # contrail-setup
@@ -75,7 +75,7 @@ done
 eval $CMD --define \"_builddir $CONTRAIL_BUILD_DIR\" \"$SPEC_DIR/contrail-nodemgr.spec\" |& tee $logdir/rpm-contrail-nodemgr.log
 # webui
 for pkg in web-controller web-core ; do
-  eval $CMD \"$SPEC_DIR/contrail-$pkg.spec\" |& tee $logdir/rpm-contrail-$pkg.log
+  eval $CMD --define \"_builddir $CONTRAIL_BUILD_DIR\" \"$SPEC_DIR/contrail-$pkg.spec\" |& tee $logdir/rpm-contrail-$pkg.log
 done
 #openstack
 for pkg in analytics config config-common control vrouter webui ; do

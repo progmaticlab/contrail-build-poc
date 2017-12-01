@@ -1,7 +1,7 @@
 # view contents of rpm file: rpm -qlp <filename>.rpm
 
 %define         _distropkgdir           %(pwd)/tools/packaging/common/control_files
-%define         _src                    %{_rpmDir}/src
+%define         _src                    %{_builddir}/src
 %define		_contrailetc 		/etc/contrail
 %define		_contrailwebsrc 	/usr/src/contrail/contrail-web-core
 %if 0%{?fedora} >= 17
@@ -9,7 +9,6 @@
 %endif
 %define		_nodemodules		node_modules/
 %define		_config			%{_src}/contrail-web-core/config
-%define		_contrailuitoolsdir	src/tools
 %define		_supervisordir		/etc/contrail/supervisord_webui_files
 %define		_websslpath		/etc/contrail/webui_ssl
 %define		_sslsub			/C=US/ST=CA/L=Sunnyvale/O=JuniperNetworks/OU=JuniperCA/CN=ContrailCA

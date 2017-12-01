@@ -42,8 +42,8 @@ gitclone https://github.com/juniper/contrail-controller controller
 gitclone https://github.com/juniper/contrail-generateDS tools/generateds
 pushd contrail-web-core
 patch -i $my_dir/web-core.patch dev-install.sh
-make package REPO=../contrail-web-controller,webController > tee $logdir/rpm-make-contrail-webController.log || echo "ERROR: some errors occured in web-controller build"
-make package REPO=../contrail-web-core > tee $logdir/rpm-make-contrail-webCore.log || echo "ERROR: some errors occured in web-core build"
+make package REPO=../contrail-web-controller,webController &> $logdir/rpm-make-contrail-webController.log || echo "ERROR: some errors occured in web-controller build"
+make package REPO=../contrail-web-core &> $logdir/rpm-make-contrail-webCore.log || echo "ERROR: some errors occured in web-core build"
 popd
 popd
 
