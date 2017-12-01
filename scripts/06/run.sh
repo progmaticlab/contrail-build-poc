@@ -6,7 +6,7 @@ source $my_dir/../common/functions
 
 echo "INFO: start time $(date)"
 
-logdir="$WORKSPACE/logs/rpm/"
+logdir="$WORKSPACE/logs/build/"
 mkdir -p $logdir
 
 export JOBS_COUNT=${JOBS_COUNT:-$(grep -c processor /proc/cpuinfo || echo 1)}
