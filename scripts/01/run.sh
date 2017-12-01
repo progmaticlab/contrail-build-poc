@@ -51,8 +51,8 @@ fi
 
 # TODO: pass version like ">=2.8 && <2.9" to last step for including to spec file
 # and download it again at last step to place it to RPMS folder
-wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.7.1/cassandra-cpp-driver-2.8.0-1.el7.centos.x86_64.rpm
-wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.7.1/cassandra-cpp-driver-devel-2.8.0-1.el7.centos.x86_64.rpm
+wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.7.1/cassandra-cpp-driver-2.7.1-1.el7.centos.x86_64.rpm
+wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.7.1/cassandra-cpp-driver-devel-2.7.1-1.el7.centos.x86_64.rpm
 cp cassandra-cpp-*.rpm $HOME/rpmbuild/RPMS/x86_64/
 sudo yum install -y cassandra-cpp-*.rpm
 
