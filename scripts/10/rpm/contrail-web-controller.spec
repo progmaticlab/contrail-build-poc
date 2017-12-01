@@ -31,7 +31,7 @@ Requires:	contrail-web-core >= %{_verstr}-%{_relstr}
 
 Obsoletes:      contrail-webui
 
-Source:		%{name}
+#Source:		%{name}
 
 %description
 Contrail Web UI package

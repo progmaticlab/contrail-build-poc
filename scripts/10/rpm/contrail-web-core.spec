@@ -42,7 +42,7 @@ Requires:	openssl
 
 Obsoletes:      contrail-webui
 
-Source:		%{name}
+#Source:		%{name}
 
 %description
 Contrail Web UI package
