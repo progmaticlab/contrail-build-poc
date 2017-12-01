@@ -13,6 +13,7 @@ export CONTRAIL_BUILD_DIR=$WORKSPACE/build
 export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
 
 tar -xPf step-1.tgz
+echo "INFO: end packing time $(date)"
 
 pushd "$my_dir"
 test -L "./build" || ln -s $CONTRAIL_BUILD_DIR ./build
@@ -30,6 +31,7 @@ cp -r third_party/go build/third_party/
 cp -r third_party/cni_go_deps build/third_party/
 
 popd
+echo "INFO: start packing time $(date)"
 tar -czPf step-2.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR $HOME/rpmbuild/RPMS
 rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR $HOME/rpmbuild
 

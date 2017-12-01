@@ -13,6 +13,7 @@ export CONTRAIL_BUILD_DIR=$WORKSPACE/build
 export CONTRAIL_BUILDROOT_DIR=$WORKSPACE/buildroot
 
 tar -xPf step-3.tgz
+echo "INFO: end packing time $(date)"
 
 pushd "$my_dir"
 gitclone https://github.com/juniper/contrail-build tools/build
@@ -39,6 +40,7 @@ rm -rf tools vrouter src
 
 popd
 
+echo "INFO: start packing time $(date)"
 tar -czPf step-4.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR $HOME/rpmbuild/RPMS
 rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR $HOME/rpmbuild
 

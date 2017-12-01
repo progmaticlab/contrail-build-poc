@@ -15,6 +15,7 @@ logdir="$WORKSPACE/logs/rpm/"
 mkdir -p $logdir
 
 tar -xPf step-6.tgz
+echo "INFO: end packing time $(date)"
 
 pushd "$my_dir"
 test -L "./build" || ln -s $CONTRAIL_BUILD_DIR build

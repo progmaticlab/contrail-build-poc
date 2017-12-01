@@ -87,6 +87,7 @@ echo "Reboot the system if kernel has been updated."
 
 cd $WORKSPACE
 # TODO: remove packing rpmbuild to cached artifacts !!!
+echo "INFO: start packing time $(date)"
 tar -czPf step-1.tgz $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR $HOME/rpmbuild/RPMS
 rm -rf $CONTRAIL_BUILD_DIR $CONTRAIL_BUILDROOT_DIR $HOME/rpmbuild
 
