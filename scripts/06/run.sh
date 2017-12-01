@@ -6,6 +6,9 @@ source $my_dir/../common/functions
 
 echo "INFO: start time $(date)"
 
+logdir="$WORKSPACE/logs/rpm/"
+mkdir -p $logdir
+
 export JOBS_COUNT=${JOBS_COUNT:-$(grep -c processor /proc/cpuinfo || echo 1)}
 export WORKSPACE=${WORKSPACE:-$HOME}
 cd $WORKSPACE
@@ -39,8 +42,8 @@ gitclone https://github.com/juniper/contrail-controller controller
 gitclone https://github.com/juniper/contrail-generateDS tools/generateds
 pushd contrail-web-core
 patch -i $my_dir/web-core.patch dev-install.sh
-make package REPO=../contrail-web-controller,webController |& tee $logdir/rpm-make-contrail-webController.log
-make package REPO=../contrail-web-core |& tee $logdir/rpm-make-contrail-webCore.log
+make package REPO=../contrail-web-controller,webController > tee $logdir/rpm-make-contrail-webController.log || echo "ERROR: some errors occured in web-controller build"
+make package REPO=../contrail-web-core > tee $logdir/rpm-make-contrail-webCore.log || echo "ERROR: some errors occured in web-core build"
 popd
 popd
 
