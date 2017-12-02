@@ -56,10 +56,6 @@ gitclone https://github.com/juniper/contrail-neutron-plugin openstack/neutron_pl
 # additional code for contrail-setup package
 gitclone https://github.com/Juniper/contrail-provisioning tools/provisioning
 
-# these items are used to build rpm-s. copy them before building the package
-#ln -s $CONTRAIL_BUILD_DIR/src/contrail-web-controller $HOME/rpmbuild/SOURCES/contrail-web-controller
-#ln -s $CONTRAIL_BUILD_DIR/src/contrail-web-core $HOME/rpmbuild/SOURCES/contrail-web-core
-
 set +e
 # contrail-setup
 # TODO: last OS version in centoslinux71 is mitaka...
@@ -83,6 +79,16 @@ for pkg in analytics config config-common control vrouter webui ; do
   eval $CMD --define \"_skuTag $OPENSTACK_VERSION\" \"$SPEC_DIR/contrail-openstack-$pkg.spec\" |& tee $logdir/rpm-contrail-openstack-$pkg.log
 done
 
+popd
+
+mkdir -p repo
+pushd repo
+wget -nv https://s3-us-west-2.amazonaws.com/contrailrhel7/third-party-packages.tgz
+tar -xvf third-party-packages.tgz
+rm third-party-packages.tgz
+cp $HOME/rpmbuild/RPMS/x86_64/*.rpm ./
+cp $HOME/rpmbuild/RPMS/noarch/*.rpm ./
+tar -czf $WORKSPACE/contrail-install-packages-$CONTRAIL_VERSION-$OPENSTACK_VERSION.tgz *
 popd
 
 echo "INFO: end time $(date)"
