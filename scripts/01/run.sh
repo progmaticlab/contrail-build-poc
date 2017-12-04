@@ -28,14 +28,15 @@ sudo yum -y install $PACKAGES
 cd $my_dir
 
 # install third-party packages
-mkdir tmp
-pushd tmp
-wget -nv https://s3-us-west-2.amazonaws.com/contrailrhel7/third-party-packages.tgz
-tar -xvf third-party-packages.tgz
-sudo yum install -y nodejs-0.10.35-1contrail.el7.x86_64.rpm
-popd
-rm -rf tmp
-
+if ! yum info nodejs | grep -q installed ; then
+  mkdir tmp
+  pushd tmp
+  wget -nv https://s3-us-west-2.amazonaws.com/contrailrhel7/third-party-packages.tgz
+  tar -xvf third-party-packages.tgz
+  sudo yum install -y nodejs-0.10.35-1contrail.el7.x86_64.rpm
+  popd
+  rm -rf tmp
+fi
 
 KVD=`rpm -q kernel-devel --queryformat "%{VERSION}-%{RELEASE}.x86_64\n" | sort -n`
 a=(${KVD//./ })
@@ -48,7 +49,7 @@ fi
 # at last step we must pack it to rpm and leave in RPMS folder
 spectool -g -R ./zookeeper.spec
 rpmbuild -ba ./zookeeper.spec
-if ! yum info libzookeeper-devel | grep installed ; then
+if ! yum info libzookeeper-devel | grep -q installed ; then
   sudo yum install -y $HOME/rpmbuild/RPMS/x86_64/libzookeeper-*.rpm
 fi
 rm -f $HOME/rpmbuild/RPMS/x86_64/zookeeper*
@@ -56,7 +57,7 @@ rm -f $HOME/rpmbuild/RPMS/x86_64/zookeeper*
 # TODO: if it is not needed for build then move it to last step. if it is needed then leave here copying to the system only.
 spectool -g -R ./python-consistent_hash.spec
 rpmbuild -ba ./python-consistent_hash.spec
-if ! yum info python-consistent_hash | grep installed ; then
+if ! yum info python-consistent_hash | grep -q installed ; then
   sudo yum install -y $HOME/rpmbuild/RPMS/x86_64/python-consistent_hash-1.0-1.0contrail.x86_64.rpm
 fi
 
@@ -65,7 +66,7 @@ fi
 wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.7.1/cassandra-cpp-driver-2.7.1-1.el7.centos.x86_64.rpm
 wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.7.1/cassandra-cpp-driver-devel-2.7.1-1.el7.centos.x86_64.rpm
 cp cassandra-cpp-*.rpm $HOME/rpmbuild/RPMS/x86_64/
-if ! yum info cassandra-cpp-driver | grep installed ; then
+if ! yum info cassandra-cpp-driver | grep -q installed ; then
   sudo yum install -y cassandra-cpp-driver*.rpm
 fi
 
