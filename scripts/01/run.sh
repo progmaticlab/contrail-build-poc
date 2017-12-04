@@ -70,6 +70,7 @@ if ! yum info cassandra-cpp-driver | grep -q installed ; then
   sudo yum install -y cassandra-cpp-driver*.rpm
 fi
 
+rm -rf librdkafka
 git clone https://github.com/edenhill/librdkafka
 pushd librdkafka/
 ./configure
@@ -79,6 +80,7 @@ sudo make rpm
 cp packaging/rpm/pkgs-0.11.1-1-default/librdkafka1-0.11.1-1.el7.centos.x86_64.rpm $HOME/rpmbuild/RPMS/x86_64/
 popd $HOME
 
+rm -rf libipfix_110209.tgz libipfix_110209
 wget http://sourceforge.net/projects/libipfix/files/libipfix/libipfix_110209.tgz
 tar -xzf libipfix_110209.tgz
 pushd libipfix_110209
@@ -87,6 +89,7 @@ make && sudo make install
 popd $HOME
 
 # TODO: think about building rpm for these sources at last step
+rm -rf grok.tar.gz jordansissel-grok-*
 wget https://github.com/jordansissel/grok/tarball/master -O grok.tar.gz
 tar -xzf grok.tar.gz
 pushd jordansissel-grok-*
