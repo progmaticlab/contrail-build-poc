@@ -46,17 +46,17 @@ fi
 
 # TODO: at first we must only install libzookeeper to the system and do not create rpm file
 # at last step we must pack it to rpm and leave in RPMS folder
+spectool -g -R ./zookeeper.spec
+rpmbuild -ba ./zookeeper.spec
 if ! yum info libzookeeper-devel | grep installed ; then
-  spectool -g -R ./zookeeper.spec
-  rpmbuild -ba ./zookeeper.spec
   sudo yum install -y $HOME/rpmbuild/RPMS/x86_64/libzookeeper-*.rpm
-  rm -f $HOME/rpmbuild/RPMS/x86_64/zookeeper*
 fi
+rm -f $HOME/rpmbuild/RPMS/x86_64/zookeeper*
 
 # TODO: if it is not needed for build then move it to last step. if it is needed then leave here copying to the system only.
+spectool -g -R ./python-consistent_hash.spec
+rpmbuild -ba ./python-consistent_hash.spec
 if ! yum info python-consistent_hash | grep installed ; then
-  spectool -g -R ./python-consistent_hash.spec
-  rpmbuild -ba ./python-consistent_hash.spec
   sudo yum install -y $HOME/rpmbuild/RPMS/x86_64/python-consistent_hash-1.0-1.0contrail.x86_64.rpm
 fi
 
@@ -65,7 +65,9 @@ fi
 wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.7.1/cassandra-cpp-driver-2.7.1-1.el7.centos.x86_64.rpm
 wget http://downloads.datastax.com/cpp-driver/centos/7/cassandra/v2.7.1/cassandra-cpp-driver-devel-2.7.1-1.el7.centos.x86_64.rpm
 cp cassandra-cpp-*.rpm $HOME/rpmbuild/RPMS/x86_64/
-sudo yum install -y cassandra-cpp-*.rpm
+if ! yum info cassandra-cpp-driver | grep installed ; then
+  sudo yum install -y cassandra-cpp-driver*.rpm
+fi
 
 git clone https://github.com/edenhill/librdkafka
 pushd librdkafka/
