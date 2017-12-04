@@ -19,7 +19,7 @@ rm -rf $HOME/rpmbuild
 mkdir -p $HOME/rpmbuild/{BUILD,RPMS,SOURCES,SPECS,SRPMS,TOOLS}
 mkdir -p $HOME/rpmbuild/RPMS/x86_64
 
-PACKAGES="autoconf automake bison boost-devel bzip2 cmake cppunit-devel cyrus-sasl cyrus-sasl-devel cyrus-sasl-lib flex gcc gcc-c++ git kernel-devel libcurl-devel libnl-devel libnl3-devel libpcap libpcap-devel libuv libuv-devel libxml2-devel lz4-devel make mock net-snmp-python nodejs openssl-devel patch protobuf protobuf-compiler protobuf-devel python-devel python-lxml python-setuptools python-sphinx rpm-build scons tbb-devel unzip vim wget zlib-devel libtool rpmdevtools tokyocabinet-devel libevent-devel gperf libxml2-python python-virtualenv libxslt-devel"
+PACKAGES="autoconf automake bison boost-devel bzip2 cmake cppunit-devel cyrus-sasl cyrus-sasl-devel cyrus-sasl-lib flex gcc gcc-c++ git kernel-devel libcurl-devel libnl-devel libnl3-devel libpcap libpcap-devel libuv libuv-devel libxml2-devel lz4-devel make mock net-snmp-python openssl-devel patch protobuf protobuf-compiler protobuf-devel python-devel python-lxml python-setuptools python-sphinx rpm-build scons tbb-devel unzip vim wget zlib-devel libtool rpmdevtools tokyocabinet-devel libevent-devel gperf libxml2-python python-virtualenv libxslt-devel"
 
 sudo yum -y install epel-release
 sudo yum -y update
