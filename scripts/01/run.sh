@@ -70,7 +70,7 @@ if ! yum info cassandra-cpp-driver | grep -q installed ; then
   sudo yum install -y cassandra-cpp-driver*.rpm
 fi
 
-rm -rf librdkafka
+sudo rm -rf librdkafka
 git clone https://github.com/edenhill/librdkafka
 pushd librdkafka/
 ./configure
