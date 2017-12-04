@@ -4,7 +4,7 @@ my_file="$(readlink -e "$0")"
 my_dir="$(dirname $my_file)"
 
 export OPENSTACK_VERSION=${OPENSTACK_VERSION:-"newton"}
-export CONTRAIL_VERSION=${CONTRAIL_VERSION:-"4.1.0.0-6"}
+export CONTRAIL_VERSION=${CONTRAIL_VERSION:-"4.2.0.0-1"}
 export CONTRAIL_RELEASE=`echo $CONTRAIL_VERSION | cut -d '-' -f 1`
 export CONTRAIL_BUILD=`echo $CONTRAIL_VERSION | cut -d '-' -f 2`
 export WORKSPACE=${WORKSPACE:-$HOME}
