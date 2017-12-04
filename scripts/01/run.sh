@@ -25,6 +25,18 @@ sudo yum -y install epel-release
 sudo yum -y update
 sudo yum -y install $PACKAGES
 
+cd $my_dir
+
+# install third-party packages
+mkdir tmp
+pushd tmp
+wget -nv https://s3-us-west-2.amazonaws.com/contrailrhel7/third-party-packages.tgz
+tar -xvf third-party-packages.tgz
+sudo yum install -y nodejs-0.10.35-1contrail.el7.x86_64.rpm
+popd
+rm -rf tmp
+
+
 KVD=`rpm -q kernel-devel --queryformat "%{VERSION}-%{RELEASE}.x86_64\n" | sort -n`
 a=(${KVD//./ })
 KV="${a[0]}.${a[1]}.${a[2]}.${a[5]}.${a[6]}"
@@ -34,7 +46,6 @@ fi
 
 # TODO: at first we must only install libzookeeper to the system and do not create rpm file
 # at last step we must pack it to rpm and leave in RPMS folder
-cd $my_dir
 if ! yum info libzookeeper-devel | grep installed ; then
   spectool -g -R ./zookeeper.spec
   rpmbuild -ba ./zookeeper.spec
