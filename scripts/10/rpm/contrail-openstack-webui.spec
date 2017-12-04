@@ -37,7 +37,6 @@ Requires: contrail-web-core >= %{_verstr}-%{_relstr}
 Requires: contrail-web-controller >= %{_verstr}-%{_relstr}
 Requires: contrail-setup >= %{_verstr}-%{_relstr}
 Requires: contrail-utils >= %{_verstr}-%{_relstr}
-Requires: opscenter
 
 %description
 Contrail Package Requirements for WebUI
@@ -48,38 +47,6 @@ install -d -m 755 %{buildroot}%{_contrailetc}
 #install -d -m 755 %{buildroot}%{_initddir}
 install -p -m 755 %{_distropkgdir}/supervisord_webui.conf %{buildroot}%{_contrailetc}/supervisord_webui.conf
 #install -p -m 755 %{_distropkgdir}/supervisor-webui.conf %{buildroot}%{_initddir}/supervisor-webui.conf
-
-%post
-f [ "$1" = "1" ]; then
-  i=0
-  while : ; do
-      sudo service opscenterd status
-      if [ $? -eq 0 ] ; then
-          break
-      fi
-      i=$(($i+1))
-      if [ $i -gt 10 ] ; then
-          echo "Error: postinst contrail-openstack-webui, expected opscenterd to be running"
-          break
-      fi
-      sleep 3
-  done
-  sudo service opscenterd stop
-  i=0
-  while : ; do
-      ps auxw | grep -Eq "opscenter\.pid" 2>/dev/null
-      if [ $? -ne 0 ] ; then
-          break
-      fi
-      i=$(($i+1))
-      if [ $i -gt 5 ] ; then
-          kill `ps auxw | grep -E "opscenter\.pid" | grep -v grep | awk '{print $2}'` > /dev/null 2>&1
-          break
-      fi
-      sleep 2
-  done
-fi
-chkconfig opscenterd off
 
 %files
 %defattr(-,root,root)
