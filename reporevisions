@@ -1,0 +1,20 @@
+freeze on 2017-12-10 00:00:00 / master
+sensible lines in this file contains repo URL as first item and SHA as second
+
+https://github.com/juniper/contrail-build 2294b4d8d9eef7445483e9f4553a8da363694ebf
+https://github.com/juniper/contrail-ceilometer-plugin 9647b5141d0d244427aa92bbcf979605843ba337
+https://github.com/juniper/contrail-common 37024c97efa219113b655057aaa25157d89da53f
+https://github.com/juniper/contrail-container-builder 2113e6afde9353f36bf9dc834fd2e94a6f3b171d
+https://github.com/juniper/contrail-controller 9792d7da9c4f95df2a7735ba46c16bc06b2450b7
+https://github.com/juniper/contrail-generateDS 836c6d3fd0bfaf0b6c832db8827a45b14053c619
+https://github.com/juniper/contrail-heat 75bf8c5eb6a339321772bf86cad6d7869670b516
+https://github.com/juniper/contrail-neutron-plugin 4a92735088ff6784a26dad6974f68e4a0da6523b
+https://github.com/juniper/contrail-nova-extensions ebc6cbc08338ded08056b08745c8b94932d1ef8a
+https://github.com/juniper/contrail-nova-vif-driver 5aaf50124202219acea2224cdf7aeb4a03ab39e1
+https://github.com/juniper/contrail-packages f435712b5f79616074807ba42bc634d5de67c5dc
+https://github.com/juniper/contrail-packaging 597651b281dfb04cd81a13145e4c1ee5059a02b9
+https://github.com/Juniper/contrail-provisioning 7125c94ef3073f6e20497d5f504253a652e16569
+https://github.com/juniper/contrail-vrouter 12b9b490c4ecc619e797e09afae1e2c144bbb1a1
+https://github.com/juniper/contrail-web-controller 0c45843129a2e40c05ae277684327198385fcc3e
+https://github.com/juniper/contrail-web-core eb5f838c08f256478fc24427b543cb8e47590e6e
+https://github.com/juniper/contrail-webui-third-party c9e51db110be83736e3fc0d7209392a73a131493
