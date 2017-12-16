@@ -1,10 +1,10 @@
-freeze on 2017-12-10 00:00:00 / master
+freeze on 2017-12-10 00:00:00 / master except containers builder repo
 sensible lines in this file contains repo URL as first item and SHA as second
 
 https://github.com/juniper/contrail-build 2294b4d8d9eef7445483e9f4553a8da363694ebf
 https://github.com/juniper/contrail-ceilometer-plugin 9647b5141d0d244427aa92bbcf979605843ba337
 https://github.com/juniper/contrail-common 37024c97efa219113b655057aaa25157d89da53f
-https://github.com/juniper/contrail-container-builder 2113e6afde9353f36bf9dc834fd2e94a6f3b171d
+https://github.com/juniper/contrail-container-builder c31effed269876d8d7d18e2c96e1ca8ac4f02811
 https://github.com/juniper/contrail-controller 9792d7da9c4f95df2a7735ba46c16bc06b2450b7
 https://github.com/juniper/contrail-generateDS 836c6d3fd0bfaf0b6c832db8827a45b14053c619
 https://github.com/juniper/contrail-heat 75bf8c5eb6a339321772bf86cad6d7869670b516
