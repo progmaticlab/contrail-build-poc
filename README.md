@@ -13,3 +13,4 @@ This is tested on CentOS 7.4
 
 Just clone this repo and run build.sh.
 It should run all steps and build RPM-s.
+Last step will build docker images from build RPM-s.
